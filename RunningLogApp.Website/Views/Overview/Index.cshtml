@@ -1,0 +1,98 @@
+﻿@model MonthlySummaryViewModel
+@{
+    ViewData["Title"] = "Overview";
+}
+
+<div class="panel panel-default activity-panel">
+    <h4 class="panel-heading display-4 text-info">@ViewData["Title"]</h4>
+
+    <table class="table table-hover">
+        <thead class="font-weight-bold">
+            <tr>
+                <td>Month</td>
+                <td>Number of Runs</td>
+                <td>Total Distance</td>
+                <td>Total Time</td>
+                <td>Avg. Pace</td>
+                <td>Avg. Run Cadence</td>
+                <td>Avg. Stride Length</td>
+                <td>Avg. Heartrate</td>
+            </tr>
+        </thead>
+
+        @foreach (var monthlySummary in Model.MonthlySummaries)
+        {
+            <tr>
+                <td>@monthlySummary.Name</td>
+                <td>@monthlySummary.NumberOfRuns</td>
+                <td>@monthlySummary.TotalDistance.ToString("F2")</td>
+                <td>@monthlySummary.TotalTime</td>
+                <td>@monthlySummary.AveragePace.ToString(@"mm\:ss")</td>
+                <td>@monthlySummary.AverageRunCadence.ToString("F1")</td>
+                <td>@monthlySummary.AverageStrideLength.ToString("F2")</td>
+                <td>@monthlySummary.AverageHeartrate.ToString("F1")</td>
+            </tr>
+        }
+    </table>
+
+    <div class="chart-container">
+        <canvas id="chartNumberOfRuns" style="width:100%; height:500px"></canvas>
+    </div>
+
+    <script src="~/lib/Chart.js/Chart.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script type="text/javascript">
+            $(function () {
+                var ctx = document.getElementById('chartNumberOfRuns').getContext('2d')
+
+                var chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                            label: 'Number of Runs',
+                            backgroundColor: 'rgb(0, 99, 132)',
+                            borderColor: 'rgb(20, 99, 132)',
+                            fill: false,
+                            data: [
+                                @Model.MonthlySummaries[0].NumberOfRuns,
+                                @Model.MonthlySummaries[1].NumberOfRuns,
+                                @Model.MonthlySummaries[2].NumberOfRuns,
+                                @Model.MonthlySummaries[3].NumberOfRuns,
+                                @Model.MonthlySummaries[4].NumberOfRuns,
+                                @Model.MonthlySummaries[5].NumberOfRuns,
+                                @Model.MonthlySummaries[6].NumberOfRuns,
+                                @Model.MonthlySummaries[7].NumberOfRuns,
+                                @Model.MonthlySummaries[8].NumberOfRuns,
+                                @Model.MonthlySummaries[9].NumberOfRuns,
+                                @Model.MonthlySummaries[10].NumberOfRuns,
+                                @Model.MonthlySummaries[11].NumberOfRuns
+                            ]
+                        }, {
+                            label: 'Distance',
+                            backgroundColor: 'rgb(30, 99, 32)',
+                            borderColor: 'rgb(20, 99, 32)',
+                            fill: false,
+                            data: [
+                                @Model.MonthlySummaries[0].TotalDistance,
+                                @Model.MonthlySummaries[1].TotalDistance,
+                                @Model.MonthlySummaries[2].TotalDistance,
+                                @Model.MonthlySummaries[3].TotalDistance,
+                                @Model.MonthlySummaries[4].TotalDistance,
+                                @Model.MonthlySummaries[5].TotalDistance,
+                                @Model.MonthlySummaries[6].TotalDistance,
+                                @Model.MonthlySummaries[7].TotalDistance,
+                                @Model.MonthlySummaries[8].TotalDistance,
+                                @Model.MonthlySummaries[9].TotalDistance,
+                                @Model.MonthlySummaries[10].TotalDistance,
+                                @Model.MonthlySummaries[11].TotalDistance
+                            ]
+                        }]
+                    }
+                });
+            })
+    </script>
+
+</div>
+

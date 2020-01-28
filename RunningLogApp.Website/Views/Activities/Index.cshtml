@@ -1,0 +1,50 @@
+﻿@model ActivitiesViewModel
+
+@{
+    ViewData["Title"] = "Activity List";
+}
+
+<div class="panel panel-default activity-panel">
+    <h4 class="panel-heading display-4 text-info">@ViewData["Title"]</h4>
+
+    <table class="table table-hover">
+        <thead class="font-weight-bold">
+            <tr>
+                <td>Start Time</td>
+                <td>Name</td>
+                <td>Type</td>
+                <td>Distance (km)</td>
+                <td>Moving Time</td>
+                <td>Elevation Gain</td>
+                <td>Avg. Pace</td>
+                <td>Max. Pace</td>
+                <td>Avg. Cadence</td>
+                <td>Avg. Stride Length</td>
+                <td>Avg. Heartrate</td>
+                <td>Max. Heartrate</td>
+            </tr>
+        </thead>
+
+        @foreach (var activity in Model.Activities)
+        {
+            if (activity.Type == "Run")
+            {
+                <tr>
+                    <td>@activity.StartDateLocal</td>
+                    <td>@activity.Name</td>
+                    <td>@activity.Type</td>
+                    <td>@((activity.Distance / 1000).ToString("F2"))</td>
+                    <td>@activity.MovingTime</td>
+                    <td>@activity.TotalElevationGain.ToString("F1")</td>
+                    <td>@activity.AveragePace.ToString(@"mm\:ss")</td>
+                    <td>@activity.MaxPace.ToString(@"mm\:ss")</td>
+                    <td>@activity.AverageCadence.ToString("F1")</td>
+                    <td>@activity.StrideLength.ToString("F2")</td>
+                    <td>@activity.AverageHeartRate.ToString("F1")</td>
+                    <td>@activity.MaxHeartRate.ToString("F1")</td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+

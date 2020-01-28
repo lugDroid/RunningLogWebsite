@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunningLogApp.Website", "RunningLogApp.Website\RunningLogApp.Website.csproj", "{711C2C1D-EDF2-46EE-9AD7-4D6988D8D3D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{711C2C1D-EDF2-46EE-9AD7-4D6988D8D3D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{711C2C1D-EDF2-46EE-9AD7-4D6988D8D3D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{711C2C1D-EDF2-46EE-9AD7-4D6988D8D3D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{711C2C1D-EDF2-46EE-9AD7-4D6988D8D3D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {951F2AE1-C803-4ABC-98F8-6B993CADEE28}
+	EndGlobalSection
+EndGlobal
