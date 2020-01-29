@@ -28,6 +28,11 @@ namespace RunningLogApp.Website.Services
             get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", "json", "auth_athlete.json"); }
         }
 
+        private string AthleteDataFileName
+        {
+            get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", "json", "athlete_data.json"); }
+        }
+
         public Task<StravaActivity[]> GetActivitiesAsync()
         {
             // TO-DO: Modify this method to retrieve actual data from Strava
@@ -53,17 +58,49 @@ namespace RunningLogApp.Website.Services
 
         public Task<Athlete> GetAthleteDataAsync()
         {
+            var athlete = new Athlete();
+
             // TO-DO: Modify this method to retrieve actual data from Strava
             using (var jsonFileReader = File.OpenText(AthleteFileName))
             {
-                var athlete = JsonSerializer.Deserialize<Athlete>(jsonFileReader.ReadToEnd(),
+                athlete = JsonSerializer.Deserialize<Athlete>(jsonFileReader.ReadToEnd(),
                     new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
-
-                return Task.FromResult(athlete);
             }
+
+            using (var jsonFileReader = File.OpenText(AthleteDataFileName))
+            {
+                athlete.RecentRunTotals = JsonSerializer.Deserialize<Athlete>(jsonFileReader.ReadToEnd(),
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    }
+                    ).RecentRunTotals;
+            }
+
+            using (var jsonFileReader = File.OpenText(AthleteDataFileName))
+            {
+                athlete.YearToDateRunTotals = JsonSerializer.Deserialize<Athlete>(jsonFileReader.ReadToEnd(),
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    }
+                    ).YearToDateRunTotals;
+            }
+
+            using (var jsonFileReader = File.OpenText(AthleteDataFileName))
+            {
+                athlete.AllTimeRunTotals = JsonSerializer.Deserialize<Athlete>(jsonFileReader.ReadToEnd(),
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    }
+                    ).AllTimeRunTotals;
+            }
+
+            return Task.FromResult(athlete);
         }
     }
 }

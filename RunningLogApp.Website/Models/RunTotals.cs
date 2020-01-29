@@ -15,11 +15,11 @@ namespace RunningLogApp.Website.Models
 
         [JsonPropertyName("moving_time")]
         [JsonConverter(typeof(TimeSpanFromSeconds))]
-        public DateTimeOffset MovingTime { get; set; }
+        public TimeSpan MovingTime { get; set; }
 
         [JsonPropertyName("elapsed_time")]
         [JsonConverter(typeof(TimeSpanFromSeconds))]
-        public DateTimeOffset ElapsedTime { get; set; }
+        public TimeSpan ElapsedTime { get; set; }
 
         [JsonPropertyName("elevation_gain")]
         public double ElevationGain { get; set; }
