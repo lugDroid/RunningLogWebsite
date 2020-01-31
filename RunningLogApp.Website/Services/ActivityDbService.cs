@@ -85,7 +85,18 @@ namespace RunningLogApp.Website.Services
 
         public Task<Athlete[]> ReadAthleteDataAsync()
         {
-            return Task.FromResult(_context.Athlete.ToArray());
+            var athletes = _context.Athlete.ToArray();
+
+            foreach (var athlete in athletes)
+            {
+                Athlete athleteDbData = _context.Athlete.First(x => x.Id == athlete.Id);
+
+                /*athlete.AllTimeRunTotals = _context.RunTotals.First(x => x.Id == athleteDbData.AllTimeRunTotals);
+                athlete.YearToDateRunTotals = athleteDbData.YearToDateRunTotals;
+                athlete.RecentRunTotals = athleteDbData.RecentRunTotals;*/
+            }
+            
+            return Task.FromResult(athletes);
         }
 
         public Task<MonthlySummary[]> ReadMonthlySummariesAsync()
@@ -102,11 +113,16 @@ namespace RunningLogApp.Website.Services
             {
                 if (destProps.Any(x => x.Name == sourceProp.Name))
                 {
-                    var property = destProps.First(x => x.Name == sourceProp.Name);
+                    var destProp = destProps.First(x => x.Name == sourceProp.Name);
 
-                    if (property.CanWrite)
+                    // if the property is of type run totals we want to updat its values, not create a new one
+                    if (sourceProp.PropertyType == typeof(TotalsData))
                     {
-                        property.SetValue(dest, sourceProp.GetValue(source, null), null);
+                        CopyProperties(sourceProp.GetValue(source), destProp.GetValue(dest));
+                    }
+                    else
+                    {
+                        destProp.SetValue(dest, sourceProp.GetValue(source, null), null);
                     }
                 }
             }

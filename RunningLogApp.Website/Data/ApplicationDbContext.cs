@@ -18,6 +18,7 @@ namespace RunningLogApp.Website.Data
         public DbSet<Athlete> Athlete { get; set; }
         public DbSet<StravaActivity> Activities { get; set; }
         public DbSet<MonthlySummary> MonthlySummaries { get; set; }
+        public DbSet<TotalsData> RunTotals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

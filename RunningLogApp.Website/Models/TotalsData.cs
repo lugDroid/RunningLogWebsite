@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace RunningLogApp.Website.Models
 {
-    public class RunTotals
+    public class TotalsData
     {
         public long Id { get; set; }
+        public long AthleteId { get; set; }
+        public Athlete Athlete { get; set; }
         public int Count { get; set; }
         public double Distance { get; set; }
 
