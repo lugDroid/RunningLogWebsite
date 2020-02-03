@@ -9,8 +9,8 @@ using RunningLogApp.Website.Data;
 namespace RunningLogApp.Website.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200127120340_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200203115839_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -216,7 +216,7 @@ namespace RunningLogApp.Website.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("AllTimeRunTotalsId")
+                    b.Property<int>("AllRunTotalsId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("BadgeTypeId")
@@ -246,7 +246,7 @@ namespace RunningLogApp.Website.Migrations
                     b.Property<string>("ProfileMedium")
                         .HasColumnType("TEXT");
 
-                    b.Property<long?>("RecentRunTotalsId")
+                    b.Property<int>("RecentRunTotalsId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ResourceState")
@@ -267,12 +267,12 @@ namespace RunningLogApp.Website.Migrations
                     b.Property<string>("Username")
                         .HasColumnType("TEXT");
 
-                    b.Property<long?>("YearToDateRunTotalsId")
+                    b.Property<int>("YearToDateRunTotalsId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AllTimeRunTotalsId");
+                    b.HasIndex("AllRunTotalsId");
 
                     b.HasIndex("RecentRunTotalsId");
 
@@ -323,35 +323,6 @@ namespace RunningLogApp.Website.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MonthlySummaries");
-                });
-
-            modelBuilder.Entity("RunningLogApp.Website.Models.RunTotals", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("AchievementCount")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<double>("Distance")
-                        .HasColumnType("REAL");
-
-                    b.Property<DateTimeOffset>("ElapsedTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<double>("ElevationGain")
-                        .HasColumnType("REAL");
-
-                    b.Property<DateTimeOffset>("MovingTime")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RunTotals");
                 });
 
             modelBuilder.Entity("RunningLogApp.Website.Models.StravaActivity", b =>
@@ -431,6 +402,35 @@ namespace RunningLogApp.Website.Migrations
                     b.ToTable("Activities");
                 });
 
+            modelBuilder.Entity("RunningLogApp.Website.Models.TotalsData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AchievementCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Distance")
+                        .HasColumnType("REAL");
+
+                    b.Property<TimeSpan>("ElapsedTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("ElevationGain")
+                        .HasColumnType("REAL");
+
+                    b.Property<TimeSpan>("MovingTime")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TotalsData");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -484,17 +484,23 @@ namespace RunningLogApp.Website.Migrations
 
             modelBuilder.Entity("RunningLogApp.Website.Models.Athlete", b =>
                 {
-                    b.HasOne("RunningLogApp.Website.Models.RunTotals", "AllTimeRunTotals")
+                    b.HasOne("RunningLogApp.Website.Models.TotalsData", "AllRunTotals")
                         .WithMany()
-                        .HasForeignKey("AllTimeRunTotalsId");
+                        .HasForeignKey("AllRunTotalsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("RunningLogApp.Website.Models.RunTotals", "RecentRunTotals")
+                    b.HasOne("RunningLogApp.Website.Models.TotalsData", "RecentRunTotals")
                         .WithMany()
-                        .HasForeignKey("RecentRunTotalsId");
+                        .HasForeignKey("RecentRunTotalsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("RunningLogApp.Website.Models.RunTotals", "YearToDateRunTotals")
+                    b.HasOne("RunningLogApp.Website.Models.TotalsData", "YearToDateRunTotals")
                         .WithMany()
-                        .HasForeignKey("YearToDateRunTotalsId");
+                        .HasForeignKey("YearToDateRunTotalsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

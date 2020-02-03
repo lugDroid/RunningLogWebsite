@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RunningLogApp.Website.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -104,21 +104,21 @@ namespace RunningLogApp.Website.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RunTotals",
+                name: "TotalsData",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Count = table.Column<int>(nullable: false),
                     Distance = table.Column<double>(nullable: false),
-                    MovingTime = table.Column<DateTimeOffset>(nullable: false),
-                    ElapsedTime = table.Column<DateTimeOffset>(nullable: false),
+                    MovingTime = table.Column<TimeSpan>(nullable: false),
+                    ElapsedTime = table.Column<TimeSpan>(nullable: false),
                     ElevationGain = table.Column<double>(nullable: false),
                     AchievementCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RunTotals", x => x.Id);
+                    table.PrimaryKey("PK_TotalsData", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -248,31 +248,31 @@ namespace RunningLogApp.Website.Migrations
                     BadgeTypeId = table.Column<int>(nullable: false),
                     ProfileMedium = table.Column<string>(nullable: true),
                     Profile = table.Column<string>(nullable: true),
-                    RecentRunTotalsId = table.Column<long>(nullable: true),
-                    YearToDateRunTotalsId = table.Column<long>(nullable: true),
-                    AllTimeRunTotalsId = table.Column<long>(nullable: true)
+                    RecentRunTotalsId = table.Column<int>(nullable: false),
+                    YearToDateRunTotalsId = table.Column<int>(nullable: false),
+                    AllRunTotalsId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Athlete", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Athlete_RunTotals_AllTimeRunTotalsId",
-                        column: x => x.AllTimeRunTotalsId,
-                        principalTable: "RunTotals",
+                        name: "FK_Athlete_TotalsData_AllRunTotalsId",
+                        column: x => x.AllRunTotalsId,
+                        principalTable: "TotalsData",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Athlete_RunTotals_RecentRunTotalsId",
+                        name: "FK_Athlete_TotalsData_RecentRunTotalsId",
                         column: x => x.RecentRunTotalsId,
-                        principalTable: "RunTotals",
+                        principalTable: "TotalsData",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Athlete_RunTotals_YearToDateRunTotalsId",
+                        name: "FK_Athlete_TotalsData_YearToDateRunTotalsId",
                         column: x => x.YearToDateRunTotalsId,
-                        principalTable: "RunTotals",
+                        principalTable: "TotalsData",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -313,9 +313,9 @@ namespace RunningLogApp.Website.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Athlete_AllTimeRunTotalsId",
+                name: "IX_Athlete_AllRunTotalsId",
                 table: "Athlete",
-                column: "AllTimeRunTotalsId");
+                column: "AllRunTotalsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Athlete_RecentRunTotalsId",
@@ -361,7 +361,7 @@ namespace RunningLogApp.Website.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "RunTotals");
+                name: "TotalsData");
         }
     }
 }

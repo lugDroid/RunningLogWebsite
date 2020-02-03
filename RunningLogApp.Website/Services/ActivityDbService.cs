@@ -45,7 +45,31 @@ namespace RunningLogApp.Website.Services
 
                 if (existingAthlete != null)
                 {
-                    CopyProperties(athlete, existingAthlete);
+                    existingAthlete.Username = athlete.Username;
+                    existingAthlete.ResourceState = athlete.ResourceState;
+                    existingAthlete.FirstName = athlete.FirstName;
+                    existingAthlete.LastName = athlete.LastName;
+                    existingAthlete.City = athlete.City;
+                    existingAthlete.State = athlete.State;
+                    existingAthlete.Country = athlete.Country;
+                    existingAthlete.Sex = athlete.Sex;
+                    existingAthlete.Premium = athlete.Premium;
+                    existingAthlete.Summit = athlete.Summit;
+                    existingAthlete.CreatedAt = athlete.CreatedAt;
+                    existingAthlete.UpdatedAt = athlete.UpdatedAt;
+                    existingAthlete.BadgeTypeId = athlete.BadgeTypeId;
+                    existingAthlete.ProfileMedium = athlete.ProfileMedium;
+                    existingAthlete.Profile = athlete.Profile;
+
+                    existingAthlete.RecentRunTotals.Count = athlete.RecentRunTotals.Count;
+                    existingAthlete.RecentRunTotals.Distance = athlete.RecentRunTotals.Distance;
+                    existingAthlete.RecentRunTotals.MovingTime = athlete.RecentRunTotals.MovingTime;
+                    existingAthlete.RecentRunTotals.ElapsedTime = athlete.RecentRunTotals.ElapsedTime;
+                    existingAthlete.RecentRunTotals.ElevationGain = athlete.RecentRunTotals.ElevationGain;
+                    existingAthlete.RecentRunTotals.AchievementCount = athlete.RecentRunTotals.AchievementCount;
+
+
+                    //CopyProperties(athlete, existingAthlete);
 
                     _context.Athlete.Update(existingAthlete);
                 }
@@ -91,9 +115,10 @@ namespace RunningLogApp.Website.Services
             {
                 Athlete athleteDbData = _context.Athlete.First(x => x.Id == athlete.Id);
 
-                /*athlete.AllTimeRunTotals = _context.RunTotals.First(x => x.Id == athleteDbData.AllTimeRunTotals);
-                athlete.YearToDateRunTotals = athleteDbData.YearToDateRunTotals;
-                athlete.RecentRunTotals = athleteDbData.RecentRunTotals;*/
+                // Read totals data from different table
+                athlete.AllRunTotals = _context.TotalsData.First(x => x.Id == athleteDbData.AllRunTotalsId);
+                athlete.YearToDateRunTotals = _context.TotalsData.First(x => x.Id == athleteDbData.YearToDateRunTotalsId);
+                athlete.RecentRunTotals = _context.TotalsData.First(x => x.Id == athleteDbData.RecentRunTotalsId);
             }
             
             return Task.FromResult(athletes);
@@ -118,7 +143,7 @@ namespace RunningLogApp.Website.Services
                     // if the property is of type run totals we want to updat its values, not create a new one
                     if (sourceProp.PropertyType == typeof(TotalsData))
                     {
-                        CopyProperties(sourceProp.GetValue(source), destProp.GetValue(dest));
+                        //CopyProperties(sourceProp.GetValue(source), destProp.GetValue(dest));
                     }
                     else
                     {
