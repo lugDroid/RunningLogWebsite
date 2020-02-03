@@ -34,6 +34,18 @@ namespace RunningLogApp.Website.Models
         [JsonPropertyName("profile_medium")]
         public string ProfileMedium { get; set; }
         public string Profile { get; set; }
-        public Totals Totals { get; set; }
+
+        public int RecentRunTotalsId { get; set; }
+        public int YearToDateRunTotalsId { get; set; }
+        public int AllRunTotalsId { get; set; }
+
+        [JsonPropertyName("recent_run_totals")]
+        public TotalsData RecentRunTotals { get; set; }
+
+        [JsonPropertyName("ytd_run_totals")]
+        public TotalsData YearToDateRunTotals { get; set; }
+
+        [JsonPropertyName("all_run_totals")]
+        public TotalsData AllRunTotals { get; set; }
     }
 }

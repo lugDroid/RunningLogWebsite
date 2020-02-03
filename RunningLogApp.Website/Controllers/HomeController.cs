@@ -33,14 +33,14 @@ namespace RunningLogApp.Website.Controllers
             // TO-DO: Get authenticated athlete data from Strava API
             Athlete athlete = await _stravaAPIService.GetAthleteDataAsync();
 
-            var result = await _activityDbService.AddAthleteDataAsync(athlete);
+            //var result = await _activityDbService.AddAthleteDataAsync(athlete);
 
             // TO-DO: Get activities from Strava API
             // now it's reading them from a JSON file
             StravaActivity[] activities = await _stravaAPIService.GetActivitiesAsync();
 
             // Add new activities to database
-            result = await _activityDbService.AddActivitiesAsync(activities);
+            var result = await _activityDbService.AddActivitiesAsync(activities);
 
             Console.WriteLine($"{ result } new activities added to the database");
 

@@ -70,15 +70,31 @@ namespace RunningLogApp.Website.Services
                     });
             }
 
-            var totals = new Totals();
-
             using (var jsonFileReader = File.OpenText(AthleteDataFileName))
             {
-                athlete.Totals = JsonSerializer.Deserialize<Totals>(jsonFileReader.ReadToEnd(),
+                athlete.RecentRunTotals = JsonSerializer.Deserialize<Athlete>(jsonFileReader.ReadToEnd(),
                     new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
-                    });
+                    }).RecentRunTotals;
+            }
+
+            using (var jsonFileReader = File.OpenText(AthleteDataFileName))
+            {
+                athlete.YearToDateRunTotals = JsonSerializer.Deserialize<Athlete>(jsonFileReader.ReadToEnd(),
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    }).YearToDateRunTotals;
+            }
+
+            using (var jsonFileReader = File.OpenText(AthleteDataFileName))
+            {
+                athlete.AllRunTotals = JsonSerializer.Deserialize<Athlete>(jsonFileReader.ReadToEnd(),
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    }).AllRunTotals;
             }
 
             return Task.FromResult(athlete);

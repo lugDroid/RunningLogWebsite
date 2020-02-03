@@ -9,9 +9,7 @@ namespace RunningLogApp.Website.Models
 {
     public class TotalsData
     {
-        public long Id { get; set; }
-        public long AthleteId { get; set; }
-        public Athlete Athlete { get; set; }
+        public int Id { get; set; }
         public int Count { get; set; }
         public double Distance { get; set; }
 
