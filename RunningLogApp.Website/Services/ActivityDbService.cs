@@ -68,8 +68,19 @@ namespace RunningLogApp.Website.Services
                     existingAthlete.RecentRunTotals.ElevationGain = athlete.RecentRunTotals.ElevationGain;
                     existingAthlete.RecentRunTotals.AchievementCount = athlete.RecentRunTotals.AchievementCount;
 
+                    existingAthlete.YearToDateRunTotals.Count = athlete.YearToDateRunTotals.Count;
+                    existingAthlete.YearToDateRunTotals.Distance = athlete.YearToDateRunTotals.Distance;
+                    existingAthlete.YearToDateRunTotals.MovingTime = athlete.YearToDateRunTotals.MovingTime;
+                    existingAthlete.YearToDateRunTotals.ElapsedTime = athlete.YearToDateRunTotals.ElapsedTime;
+                    existingAthlete.YearToDateRunTotals.ElevationGain = athlete.YearToDateRunTotals.ElevationGain;
+                    existingAthlete.YearToDateRunTotals.AchievementCount = athlete.YearToDateRunTotals.AchievementCount;
 
-                    //CopyProperties(athlete, existingAthlete);
+                    existingAthlete.AllRunTotals.Count = athlete.AllRunTotals.Count;
+                    existingAthlete.AllRunTotals.Distance = athlete.AllRunTotals.Distance;
+                    existingAthlete.AllRunTotals.MovingTime = athlete.AllRunTotals.MovingTime;
+                    existingAthlete.AllRunTotals.ElapsedTime = athlete.AllRunTotals.ElapsedTime;
+                    existingAthlete.AllRunTotals.ElevationGain = athlete.AllRunTotals.ElevationGain;
+                    existingAthlete.AllRunTotals.AchievementCount = athlete.AllRunTotals.AchievementCount;
 
                     _context.Athlete.Update(existingAthlete);
                 }
