@@ -9,10 +9,10 @@ namespace RunningLogApp.Website.Services
     public interface IActivityDbService
     {
         Task<int> AddAthleteDataAsync(Athlete athlete);
-        Task<Athlete[]> ReadAthleteDataAsync();
-        Task<int> AddActivitiesAsync(StravaActivity[] activities);
-        Task<StravaActivity[]> ReadActivitiesAsync();
-        Task<int> AddMonthlySummariesAsync(MonthlySummary[] summaries);
-        Task<MonthlySummary[]> ReadMonthlySummariesAsync();
+        Task<List<Athlete>> ReadAthleteDataAsync();
+        Task<int> AddActivitiesAsync(List<StravaActivity> activities);
+        Task<List<StravaActivity>> ReadActivitiesAsync();
+        Task<int> AddMonthlySummariesAsync(List<MonthlySummary> summaries);
+        Task<List<MonthlySummary>> ReadMonthlySummariesAsync();
     }
 }

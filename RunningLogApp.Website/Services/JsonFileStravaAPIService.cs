@@ -33,7 +33,7 @@ namespace RunningLogApp.Website.Services
             get { return Path.Combine(WebHostEnvironment.ContentRootPath, "data", "json", "athlete_data.json"); }
         }
 
-        public Task<StravaActivity[]> GetActivitiesAsync()
+        public Task<List<StravaActivity>> GetActivitiesAsync()
         {
             // TO-DO: Modify this method to retrieve actual data from Strava
             using (var jsonFileReader = File.OpenText(ActivityListFileName))
@@ -52,7 +52,7 @@ namespace RunningLogApp.Website.Services
                     activity.CalculateStrideLength();
                 }
 
-                return Task.FromResult(activities);
+                return Task.FromResult(activities.ToList());
             }
         }
 

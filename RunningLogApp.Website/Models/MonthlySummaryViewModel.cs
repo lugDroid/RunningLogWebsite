@@ -7,6 +7,6 @@ namespace RunningLogApp.Website.Models
 {
     public class MonthlySummaryViewModel
     {
-        public MonthlySummary[] MonthlySummaries { get; set; }
+        public List<MonthlySummary> MonthlySummaries { get; set; }
     }
 }

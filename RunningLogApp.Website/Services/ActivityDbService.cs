@@ -16,19 +16,23 @@ namespace RunningLogApp.Website.Services
             _context = context;
         }
 
-        public async Task<int> AddActivitiesAsync(StravaActivity[] newActivities)
+        public async Task<int> AddActivitiesAsync(List<StravaActivity> newActivities)
         {
             var existingActivities = await ReadActivitiesAsync();
             
             foreach(var newActivity in newActivities)
             {
-                if (newActivity.Type != "Run" || existingActivities.Any(i => i.Id == newActivity.Id))
+                if (newActivity.Type == "Run")
                 {
-                    continue;
-                }
-                else
-                {
-                    _context.Activities.Add(newActivity);
+                    if(existingActivities.Any(i => i.Id == newActivity.Id))
+                    {
+                        // Activities won't be modified
+                        continue;
+                    }
+                    else
+                    {
+                        _context.Activities.Add(newActivity);
+                    }
                 }
             }
 
@@ -93,16 +97,29 @@ namespace RunningLogApp.Website.Services
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> AddMonthlySummariesAsync(MonthlySummary[] summaries)
+        public async Task<int> AddMonthlySummariesAsync(List<MonthlySummary> summaries)
         {
             var existingMonthlySummaries = await ReadMonthlySummariesAsync();
 
-            // TO-DO: Add code to update existing summaries with new info
             foreach (var newSummary in summaries)
             {
                 if (existingMonthlySummaries.Any(x => x.Id == newSummary.Id))
                 {
-                    continue;
+                    var existingSummary = existingMonthlySummaries.First(x => x.Id == newSummary.Id);
+
+                    if (existingSummary != null)
+                    {
+                        existingSummary.NumberOfRuns = newSummary.NumberOfRuns;
+                        existingSummary.TotalDistance = newSummary.TotalDistance;
+                        existingSummary.TotalTime = newSummary.TotalTime;
+                        existingSummary.AveragePace = newSummary.AveragePace;
+                        existingSummary.AverageRunCadence = newSummary.AverageRunCadence;
+                        existingSummary.AverageStrideLength = newSummary.AverageStrideLength;
+                        existingSummary.AverageHeartrate = newSummary.AverageHeartrate;
+                        existingSummary.TotalCalories = newSummary.TotalCalories;
+
+                        _context.MonthlySummaries.Update(existingSummary);
+                    }
                 }
                 else
                 {
@@ -113,12 +130,12 @@ namespace RunningLogApp.Website.Services
             return await _context.SaveChangesAsync();
         }
 
-        public Task<StravaActivity[]> ReadActivitiesAsync()
+        public Task<List<StravaActivity>> ReadActivitiesAsync()
         {
-            return Task.FromResult(_context.Activities.ToArray());
+            return Task.FromResult(_context.Activities.ToList());
         }
 
-        public Task<Athlete[]> ReadAthleteDataAsync()
+        public Task<List<Athlete>> ReadAthleteDataAsync()
         {
             var athletes = _context.Athlete.ToArray();
 
@@ -132,12 +149,12 @@ namespace RunningLogApp.Website.Services
                 athlete.RecentRunTotals = _context.TotalsData.First(x => x.Id == athleteDbData.RecentRunTotalsId);
             }
             
-            return Task.FromResult(athletes);
+            return Task.FromResult(athletes.ToList());
         }
 
-        public Task<MonthlySummary[]> ReadMonthlySummariesAsync()
+        public Task<List<MonthlySummary>> ReadMonthlySummariesAsync()
         {
-            return Task.FromResult(_context.MonthlySummaries.ToArray());
+            return Task.FromResult(_context.MonthlySummaries.ToList());
         }
 
         private void CopyProperties<T,TU>(T source, TU dest)
@@ -154,7 +171,7 @@ namespace RunningLogApp.Website.Services
                     // if the property is of type run totals we want to updat its values, not create a new one
                     if (sourceProp.PropertyType == typeof(TotalsData))
                     {
-                        //CopyProperties(sourceProp.GetValue(source), destProp.GetValue(dest));
+                        CopyProperties(sourceProp.GetValue(source), destProp.GetValue(dest));
                     }
                     else
                     {

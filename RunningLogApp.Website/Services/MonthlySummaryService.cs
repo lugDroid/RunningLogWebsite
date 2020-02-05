@@ -8,7 +8,7 @@ namespace RunningLogApp.Website.Services
 {
     public class MonthlySummaryService : IMonthlySummaryService
     {
-        public MonthlySummary[] Calculate(StravaActivity[] activities)
+        public List<MonthlySummary> Calculate(List<StravaActivity> activities)
         {
             var monthlySummaries = new MonthlySummary[12];
 
@@ -73,7 +73,7 @@ namespace RunningLogApp.Website.Services
                 }
             }
 
-            return monthlySummaries;
+            return monthlySummaries.ToList();
         }
     }
 }

@@ -9,6 +9,6 @@ namespace RunningLogApp.Website.Services
     public interface IStravaAPIService
     {
         Task<Athlete> GetAthleteDataAsync();
-        Task<StravaActivity[]> GetActivitiesAsync();
+        Task<List<StravaActivity>> GetActivitiesAsync();
     }
 }

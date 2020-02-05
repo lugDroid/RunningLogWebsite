@@ -354,6 +354,8 @@ MigrationBackup/
 
 # Sqlite database files
 */app.db
+*/app.db-shm
+*/app.db-wal
 
 # Temp json files
 */Data/Json/*

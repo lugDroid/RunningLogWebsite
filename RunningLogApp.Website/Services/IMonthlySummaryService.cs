@@ -8,6 +8,6 @@ namespace RunningLogApp.Website.Services
 {
     public interface IMonthlySummaryService
     {
-        MonthlySummary[] Calculate(StravaActivity[] activities);
+        List<MonthlySummary> Calculate(List<StravaActivity> activities);
     }
 }

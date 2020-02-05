@@ -37,12 +37,17 @@ namespace RunningLogApp.Website.Controllers
 
             // TO-DO: Get activities from Strava API
             // now it's reading them from a JSON file
-            StravaActivity[] activities = await _stravaAPIService.GetActivitiesAsync();
+            var activities = await _stravaAPIService.GetActivitiesAsync();
 
             // Add new activities to database
             result = await _activityDbService.AddActivitiesAsync(activities);
 
             Console.WriteLine($"{ result } new activities added to the database");
+
+            var tempActivity = activities[0];
+            tempActivity.Id = 9054596044;
+            tempActivity.Distance = 40000;
+            activities.Add(tempActivity);
 
             // Calculate monthly summaries and save them to the database
             var summaries = _monthlySummaryService.Calculate(activities);

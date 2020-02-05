@@ -7,6 +7,6 @@ namespace RunningLogApp.Website.Models
 {
     public class ActivitiesViewModel
     {
-        public StravaActivity[] Activities { get; set; }
+        public List<StravaActivity> Activities { get; set; }
     }
 }
