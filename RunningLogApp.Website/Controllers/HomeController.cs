@@ -44,11 +44,6 @@ namespace RunningLogApp.Website.Controllers
 
             Console.WriteLine($"{ result } new activities added to the database");
 
-            var tempActivity = activities[0];
-            tempActivity.Id = 9054596044;
-            tempActivity.Distance = 40000;
-            activities.Add(tempActivity);
-
             // Calculate monthly summaries and save them to the database
             var summaries = _monthlySummaryService.Calculate(activities);
             result = await _activityDbService.AddMonthlySummariesAsync(summaries);
