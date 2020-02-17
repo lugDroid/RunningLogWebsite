@@ -29,38 +29,38 @@
                 <tr>
                     <th></th>
                     <th>Activities</th>
-                    <th>Distance</th>
+                    <th>Distance (km)</th>
                     <th>Moving Time</th>
                     <th>Elapsed Time</th>
-                    <th>Elevation Gain</th>
+                    <th>Elevation Gain (m)</th>
                 </tr>
             </thead>
 
             <tr>
                 <th>Recent</th>
                 <td>@Model.RecentRunTotals.Count</td>
-                <td>@Model.RecentRunTotals.Distance</td>
+                <td>@((Model.RecentRunTotals.Distance / 1000).ToString("F2"))</td>
                 <td>@Model.RecentRunTotals.MovingTime</td>
                 <td>@Model.RecentRunTotals.ElapsedTime</td>
-                <td>@Model.RecentRunTotals.ElevationGain</td>
+                <td>@Model.RecentRunTotals.ElevationGain.ToString("F1")</td>
             </tr>
 
             <tr>
                 <th>Year to Date</th>
                 <td>@Model.YearToDateRunTotals.Count</td>
-                <td>@Model.YearToDateRunTotals.Distance</td>
+                <td>@((Model.YearToDateRunTotals.Distance / 1000).ToString("F2"))</td>
                 <td>@Model.YearToDateRunTotals.MovingTime</td>
                 <td>@Model.YearToDateRunTotals.ElapsedTime</td>
-                <td>@Model.YearToDateRunTotals.ElevationGain</td>
+                <td>@Model.YearToDateRunTotals.ElevationGain.ToString("F1")</td>
             </tr>
 
             <tr>
                 <th>All time</th>
                 <td>@Model.AllRunTotals.Count</td>
-                <td>@Model.AllRunTotals.Distance</td>
+                <td>@((Model.AllRunTotals.Distance / 1000).ToString("F2"))</td>
                 <td>@Model.AllRunTotals.MovingTime</td>
                 <td>@Model.AllRunTotals.ElapsedTime</td>
-                <td>@Model.AllRunTotals.ElevationGain</td>
+                <td>@Model.AllRunTotals.ElevationGain.ToString("F1")</td>
             </tr>
         </table>
 
